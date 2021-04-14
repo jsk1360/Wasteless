@@ -1,0 +1,1458 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/7/2020 7:31:03 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName=""
+  DTS:CreatorName=""
+  DTS:DTSID="{F6FB17F5-FB9C-4EDD-9FA3-188139DDF541}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="1035"
+  DTS:ObjectName="Timetable"
+  DTS:PackageType="5"
+  DTS:VersionBuild="50"
+  DTS:VersionGUID="{F50F9C6C-A539-4FD2-B9AF-0DC4CAC0B10C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Timetable]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{9A784FED-6C90-4BBC-BBF5-7D351E4AE8EC}"
+      DTS:ObjectName="Timetable">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ @[User::Tiedosto] +";Extended Properties=\"Excel 12.0 XML;HDR=YES\";"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\RistoLamminaho\Desktop\Documents\Wasteless\Data\Lukujärjestys_Lapua_Yläkoulu_20200316_20200530.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E20894C8-F626-4613-BCFE-0AAE3C21B4C5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Tiedosto">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\RistoLamminaho\Desktop\Documents\Wasteless\Data\Lukujärjestys_Lapua_Yläkoulu_20200316_20200530.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Loop Timetable Excel files"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{839A9C21-D000-410C-90E0-EC7FC0720F9E}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loop Timetable Excel files">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{73F4AAE5-084C-41EA-845E-CE5EADA2F16C}"
+        DTS:ObjectName="{FD872FBB-11FE-48A7-899E-A0FD9D553B29}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Users\RistoLamminaho\Desktop\Documents\Wasteless\Data" />
+            <FEFEProperty
+              FileSpec="Lukuj*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Loop Timetable Excel files\Load Data to Stage"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{BFED3233-B6E6-490B-92F3-1C803918419B}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load Data to Stage"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Add FileName"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="82"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]"
+                          name="FileName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACE]([RIGHT](@[User::Tiedosto],[FINDSTRING]([REVERSE](@[User::Tiedosto]),"\\",1) - 1),".xlsx","")</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACE(RIGHT(@[User::Tiedosto],FINDSTRING(REVERSE(@[User::Tiedosto]),"\\",1) - 1),".xlsx","")</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="Timetable from Excel"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">Lukujärjestys$</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Timetable]"
+                      connectionManagerRefId="Package.ConnectionManagers[Timetable]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Luokka]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[Luokka]"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Luokka]"
+                          name="Luokka"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Klo]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[Klo]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Klo]"
+                          name="Klo"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[MA]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[MA]"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[MA]"
+                          name="MA"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[TI]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[TI]"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[TI]"
+                          name="TI"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[KE]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[KE]"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[KE]"
+                          name="KE"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[TO]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[TO]"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[TO]"
+                          name="TO"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[PE]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[PE]"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[PE]"
+                          name="PE"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Rivinro]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[Rivinro]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Rivinro]"
+                          name="Rivinro"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[Luokka]"
+                          dataType="wstr"
+                          length="255"
+                          name="Luokka" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[Klo]"
+                          dataType="r8"
+                          name="Klo" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[MA]"
+                          dataType="wstr"
+                          length="255"
+                          name="MA" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[TI]"
+                          dataType="wstr"
+                          length="255"
+                          name="TI" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[KE]"
+                          dataType="wstr"
+                          length="255"
+                          name="KE" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[TO]"
+                          dataType="wstr"
+                          length="255"
+                          name="TO" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[PE]"
+                          dataType="wstr"
+                          length="255"
+                          name="PE" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].ExternalColumns[Rivinro]"
+                          dataType="r8"
+                          name="Rivinro" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[Luokka]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[Luokka]"
+                          name="Luokka" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[Klo]"
+                          dataType="r8"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[Klo]"
+                          name="Klo" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[MA]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[MA]"
+                          name="MA" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[TI]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[TI]"
+                          name="TI" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[KE]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[KE]"
+                          name="KE" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[TO]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[TO]"
+                          name="TO" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[PE]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[PE]"
+                          name="PE" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[Rivinro]"
+                          dataType="r8"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[Rivinro]"
+                          name="Rivinro" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Timetable to Stage schema"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Stage].[Lukujarjestys]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Connections[OleDbConnection]"
+                      connectionManagerID="{0A110F29-3978-4B13-909F-3616FE8857DB}:invalid"
+                      connectionManagerRefId="{0A110F29-3978-4B13-909F-3616FE8857DB}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[Luokka]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Luokka"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Luokka]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Luokka]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[Klo]"
+                          cachedDataType="r8"
+                          cachedName="Klo"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Klo]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Klo]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[MA]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="MA"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[MA]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[MA]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[TI]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="TI"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[TI]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[TI]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[KE]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="KE"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[KE]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[KE]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[TO]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="TO"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[TO]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[TO]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[PE]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="PE"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[PE]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[PE]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[Rivinro]"
+                          cachedDataType="r8"
+                          cachedName="Rivinro"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Rivinro]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output].Columns[Rivinro]" />
+                        <inputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].Columns[FileName]"
+                          cachedDataType="wstr"
+                          cachedLength="82"
+                          cachedName="FileName"
+                          externalMetadataColumnId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tiedosto]"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Luokka]"
+                          dataType="wstr"
+                          length="255"
+                          name="Luokka" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Klo]"
+                          dataType="i4"
+                          name="Klo" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[MA]"
+                          dataType="wstr"
+                          length="10"
+                          name="MA" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[TI]"
+                          dataType="wstr"
+                          length="10"
+                          name="TI" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[KE]"
+                          dataType="wstr"
+                          length="10"
+                          name="KE" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[TO]"
+                          dataType="wstr"
+                          length="10"
+                          name="TO" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[PE]"
+                          dataType="wstr"
+                          length="10"
+                          name="PE" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Rivinro]"
+                          dataType="i4"
+                          name="Rivinro" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tiedosto]"
+                          dataType="wstr"
+                          length="255"
+                          name="Tiedosto" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Loop Timetable Excel files\Load Data to Stage.Paths[Derived Column Output]"
+                  endId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Loop Timetable Excel files\Load Data to Stage.Paths[Excel Source Output]"
+                  endId="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]"
+                  name="Excel Source Output"
+                  startId="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel.Outputs[Excel Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{C1C76C19-3514-4F1D-B583-49F603ACDCA9}"
+          DTS:ObjectName="{C1C76C19-3514-4F1D-B583-49F603ACDCA9}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Tiedosto" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Timetable to DW schema"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{0266A417-913F-4F48-B3C9-79E73841AB41}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Timetable to DW schema"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="  merge DW.FacEventCalendar as Target&#xA;using Temp.EventCalendar as Source&#xA;on Target.DateSid = Source.DateSid and Target.LocationSid = Source.LocationSid and Target.EventDesc = Source.EventDesc&#xA;when matched and (coalesce(Target.PackedLunchCount,0) != coalesce(Source.PackedLunchCount,'') OR coalesce(Target.EffectToMealCount,0) != coalesce(Source.EffectToMealCount,''))  then update&#xA;set Target.PackedLunchCount = Source.PackedLunchCount,&#xA;Target.EffectToMealCount = Source.EffectToMealCount&#xA;when not matched then insert&#xA;(DateSid, LocationSid, EventDesc, PackedLunchCount, EffectToMealCount)&#xA;values (Source.DateSid, Source.LocationSid, Source.EventDesc, Source.PackedLunchCount, Source.EffectToMealCount);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Timetable to Temp"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{21C31944-D2F8-4BD0-AAFB-F35228C98820}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Timetable to Temp"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Timetable to Temp\Events from Stage"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Events from Stage"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select format(Pvm,'yyyyMMdd') DateSID , Selite EventDesc, LocationSID, Evaat PackedLunchCount, [Vaikutus ruokailuun] EffectToMealCount
+  from
+  [Stage].[Event] x
+  join DW.DimLocation y on (select Value from dbo.Split(x.Tiedosto,'_',1) where OrderNbr = 2) = y.City and (select Value from dbo.Split(x.Tiedosto,'_',1) where OrderNbr = 3) = y.LocationName</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Timetable to Temp\Events from Stage.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      length="4000"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      name="DateSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EventDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EventDesc]"
+                      length="255"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EventDesc]"
+                      name="EventDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      name="LocationSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[PackedLunchCount]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[PackedLunchCount]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[PackedLunchCount]"
+                      name="PackedLunchCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EffectToMealCount]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EffectToMealCount]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EffectToMealCount]"
+                      name="EffectToMealCount"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      dataType="wstr"
+                      length="4000"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EventDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="EventDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[PackedLunchCount]"
+                      dataType="i4"
+                      name="PackedLunchCount" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EffectToMealCount]"
+                      dataType="bool"
+                      name="EffectToMealCount" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      name="DateSID" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EventDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EventDesc]"
+                      name="EventDesc" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      dataType="i4"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      name="LocationSID" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[PackedLunchCount]"
+                      dataType="i4"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[PackedLunchCount]"
+                      name="PackedLunchCount" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EffectToMealCount]"
+                      dataType="bool"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EffectToMealCount]"
+                      name="EffectToMealCount" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Timetable to Temp\Events to Temp"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Events to Temp"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Temp].[EventCalendar]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Timetable to Temp\Events to Temp.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[DateSID]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="DateSID"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[DateSID]" />
+                    <inputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[EventDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="EventDesc"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EventDesc]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EventDesc]" />
+                    <inputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[LocationSID]"
+                      cachedDataType="i4"
+                      cachedName="LocationSID"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]" />
+                    <inputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[PackedLunchCount]"
+                      cachedDataType="i4"
+                      cachedName="PackedLunchCount"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[PackedLunchCount]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[PackedLunchCount]" />
+                    <inputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[EffectToMealCount]"
+                      cachedDataType="bool"
+                      cachedName="EffectToMealCount"
+                      externalMetadataColumnId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EffectToMealCount]"
+                      lineageId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EffectToMealCount]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      dataType="wstr"
+                      length="4000"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EventDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="EventDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[PackedLunchCount]"
+                      dataType="i4"
+                      name="PackedLunchCount" />
+                    <externalMetadataColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EffectToMealCount]"
+                      dataType="bool"
+                      name="EffectToMealCount" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Timetable to Temp\Events to Temp.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Timetable to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Timetable to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Timetable to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Timetable to Temp.Paths[OLE DB Source Output]"
+              endId="Package\Timetable to Temp\Events to Temp.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Timetable to Temp\Events from Stage.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Stage"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{D72AA51A-5C6E-407F-B7D1-CE7E4B0B20E2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Stage"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="truncate table stage.timetable&#xA;truncate table temp.timetable" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update ClassID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2E10BFC4-AD48-4AAD-8B6E-B3842216EDA0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update ClassID"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="  update x set luokka = y.Luokka&#xA;   from Stage.Lukujarjestys x &#xA;   join (select luokka, rivinro,Rivinro + 8 riviloppu, tiedosto from stage.Lukujarjestys where luokka is not null)  y on x.Tiedosto = y.Tiedosto and x.Rivinro between y.Rivinro and y.riviloppu" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{549EE273-034F-4970-974B-A04F41852DAD}"
+      DTS:From="Package\Truncate Stage"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Loop Timetable Excel files" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{373B192E-FC79-4359-8CE3-93927EB70712}"
+      DTS:From="Package\Loop Timetable Excel files"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update ClassID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{6628781E-BF82-49A6-969D-9BE2C0646DC6}"
+      DTS:From="Package\Timetable to Temp"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Merge Timetable to DW schema" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{984FC82A-E02F-496C-83F5-F055E3C49EC8}"
+      DTS:From="Package\Update ClassID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Timetable to Temp" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Loop Timetable Excel files\Load Data to Stage"
+          TopLeft="52,63" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="257,192"
+          Size="257,235"
+          Id="Package\Loop Timetable Excel files"
+          TopLeft="638,97" />
+        <NodeLayout
+          Size="230,42"
+          Id="Package\Merge Timetable to DW schema"
+          TopLeft="666,567" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\Timetable to Temp"
+          TopLeft="768,453" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Truncate Stage"
+          TopLeft="235,147" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Update ClassID"
+          TopLeft="383,413" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="386,168">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="252,46.5"
+              Start="0,0"
+              End="244.5,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="122,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="122,0"
+                    Point2="126,0"
+                    Point3="126,4" />
+                  <mssgle:LineSegment
+                    End="126,42.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="126,42.5"
+                    Point2="126,46.5"
+                    Point3="130,46.5" />
+                  <mssgle:LineSegment
+                    End="244.5,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="766.5,332">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-308,81"
+              Start="0,0"
+              End="-308,73.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.5"
+                    Point2="0,40.5"
+                    Point3="-4,40.5" />
+                  <mssgle:LineSegment
+                    End="-304,40.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-304,40.5"
+                    Point2="-308,40.5"
+                    Point3="-308,44.5" />
+                  <mssgle:LineSegment
+                    End="-308,73.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="852,495">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-71,72"
+              Start="0,0"
+              End="-71,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32"
+                    Point2="0,36"
+                    Point3="-4,36" />
+                  <mssgle:LineSegment
+                    End="-67,36" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-67,36"
+                    Point2="-71,36"
+                    Point3="-71,40" />
+                  <mssgle:LineSegment
+                    End="-71,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="534,434">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="234,40"
+              Start="0,0"
+              End="226.5,40">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="113,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="113,0"
+                    Point2="117,0"
+                    Point3="117,4" />
+                  <mssgle:LineSegment
+                    End="117,36" />
+                  <mssgle:CubicBezierSegment
+                    Point1="117,36"
+                    Point2="117,40"
+                    Point3="121,40" />
+                  <mssgle:LineSegment
+                    End="226.5,40" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Loop Timetable Excel files\Load Data to Stage">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="207,42"
+          Id="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema"
+          TopLeft="366,369" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel"
+          TopLeft="313,141" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Loop Timetable Excel files\Load Data to Stage\Add FileName"
+          TopLeft="372,248" />
+        <EdgeLayout
+          Id="Package\Loop Timetable Excel files\Load Data to Stage.Paths[Derived Column Output]"
+          TopLeft="444,290">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="25.5,79"
+              Start="0,0"
+              End="25.5,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.5"
+                    Point2="0,39.5"
+                    Point3="4,39.5" />
+                  <mssgle:LineSegment
+                    End="21.5,39.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21.5,39.5"
+                    Point2="25.5,39.5"
+                    Point3="25.5,43.5" />
+                  <mssgle:LineSegment
+                    End="25.5,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Timetable Excel files\Load Data to Stage.Paths[Excel Source Output]"
+          TopLeft="402,183">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42,65"
+              Start="0,0"
+              End="42,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.5"
+                    Point2="0,32.5"
+                    Point3="4,32.5" />
+                  <mssgle:LineSegment
+                    End="38,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38,32.5"
+                    Point2="42,32.5"
+                    Point3="42,36.5" />
+                  <mssgle:LineSegment
+                    End="42,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Timetable Excel files\Load Data to Stage\Timetable to Stage schema">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Timetable Excel files\Load Data to Stage\Timetable from Excel">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Timetable to Temp">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Timetable to Temp\Events to Temp"
+          TopLeft="416,461" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Timetable to Temp\Events from Stage"
+          TopLeft="495,196" />
+        <EdgeLayout
+          Id="Package\Timetable to Temp.Paths[OLE DB Source Output]"
+          TopLeft="577.5,238">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-85,223"
+              Start="0,0"
+              End="-85,215.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,107.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,107.5"
+                    Point2="0,111.5"
+                    Point3="-4,111.5" />
+                  <mssgle:LineSegment
+                    End="-81,111.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-81,111.5"
+                    Point2="-85,111.5"
+                    Point3="-85,115.5" />
+                  <mssgle:LineSegment
+                    End="-85,215.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Timetable to Temp\Events from Stage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Timetable to Temp\Events to Temp">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

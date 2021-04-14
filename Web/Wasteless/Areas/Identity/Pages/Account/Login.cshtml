@@ -1,0 +1,46 @@
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Kirjaudu sisään";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-6">
+        <section>
+            <form id="account" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.UserName">
+                        @Html.DisplayNameFor(m => m.Input.UserName)
+                    </label>
+                    <input asp-for="Input.UserName" class="form-control"/>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">
+                        @Html.DisplayNameFor(m => m.Input.Password)
+                    </label>
+                    <input asp-for="Input.Password" class="form-control"/>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe"/>
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Kirjaudu</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

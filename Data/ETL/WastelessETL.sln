@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "WastelessETL", "WastelessETL\WastelessETL.dtproj", "{6EE8F5E8-72BB-41F4-909F-EDBD0F1C816A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EE8F5E8-72BB-41F4-909F-EDBD0F1C816A}.Development|Default.ActiveCfg = Development
+		{6EE8F5E8-72BB-41F4-909F-EDBD0F1C816A}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4BCE8DB-1AB3-4A44-9343-298D354749BF}
+	EndGlobalSection
+EndGlobal

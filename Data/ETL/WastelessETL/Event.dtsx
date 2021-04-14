@@ -1,0 +1,1254 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/7/2020 7:31:03 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName=""
+  DTS:CreatorName=""
+  DTS:DTSID="{4550993B-3144-433B-9D58-231A43AAECA6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="1035"
+  DTS:ObjectName="Event"
+  DTS:PackageType="5"
+  DTS:VersionBuild="45"
+  DTS:VersionGUID="{9F6C5665-357F-4382-A724-E11B4126556E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Events]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{0EB40B65-BD88-469D-980A-33C45ED28AC4}"
+      DTS:ObjectName="Events">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ @[User::Tiedosto] +";Extended Properties=\"Excel 12.0 XML;HDR=YES\";"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\kehitys\Wasteless\TestData\Tapahtumakalenteri_Lapua_Yläkoulu.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{46ED7F74-D8B5-436B-8634-0E89C49F411B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Tiedosto">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\kehitys\Wasteless\TestData\Tapahtumakalenteri_Lapua_Yläkoulu.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Events to Temp"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{92C19FC5-B214-4E2E-81BF-9D428E0CED68}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Events to Temp"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Events to Temp\Events from Stage"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Events from Stage"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Stage].[Event]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select format(Pvm,'yyyyMMdd') DateSID , Selite EventDesc, LocationSID, Evaat PackedLunchCount, [Vaikutus ruokailuun] EffectToMealCount
+  from
+  [Stage].[Event] x
+  join DW.DimLocation y on (select Value from dbo.Split(x.Tiedosto,'_',1) where OrderNbr = 2) = y.City and (select Value from dbo.Split(x.Tiedosto,'_',1) where OrderNbr = 3) = y.LocationName</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Events to Temp\Events from Stage.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      length="4000"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      name="DateSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EventDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EventDesc]"
+                      length="255"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EventDesc]"
+                      name="EventDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      name="LocationSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[PackedLunchCount]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[PackedLunchCount]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[PackedLunchCount]"
+                      name="PackedLunchCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EffectToMealCount]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EffectToMealCount]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EffectToMealCount]"
+                      name="EffectToMealCount"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      dataType="wstr"
+                      length="4000"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EventDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="EventDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[PackedLunchCount]"
+                      dataType="i4"
+                      name="PackedLunchCount" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].ExternalColumns[EffectToMealCount]"
+                      dataType="bool"
+                      name="EffectToMealCount" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      name="DateSID" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EventDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EventDesc]"
+                      name="EventDesc" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      dataType="i4"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      name="LocationSID" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[PackedLunchCount]"
+                      dataType="i4"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[PackedLunchCount]"
+                      name="PackedLunchCount" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EffectToMealCount]"
+                      dataType="bool"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[EffectToMealCount]"
+                      name="EffectToMealCount" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Events to Temp\Events to Temp"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Events to Temp"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Temp].[EventCalendar]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Events to Temp\Events to Temp.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[DateSID]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="DateSID"
+                      externalMetadataColumnId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[DateSID]" />
+                    <inputColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[EventDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="EventDesc"
+                      externalMetadataColumnId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EventDesc]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EventDesc]" />
+                    <inputColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[LocationSID]"
+                      cachedDataType="i4"
+                      cachedName="LocationSID"
+                      externalMetadataColumnId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]" />
+                    <inputColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[PackedLunchCount]"
+                      cachedDataType="i4"
+                      cachedName="PackedLunchCount"
+                      externalMetadataColumnId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[PackedLunchCount]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[PackedLunchCount]" />
+                    <inputColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].Columns[EffectToMealCount]"
+                      cachedDataType="bool"
+                      cachedName="EffectToMealCount"
+                      externalMetadataColumnId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EffectToMealCount]"
+                      lineageId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output].Columns[EffectToMealCount]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      dataType="wstr"
+                      length="4000"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EventDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="EventDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[PackedLunchCount]"
+                      dataType="i4"
+                      name="PackedLunchCount" />
+                    <externalMetadataColumn
+                      refId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input].ExternalColumns[EffectToMealCount]"
+                      dataType="bool"
+                      name="EffectToMealCount" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Events to Temp\Events to Temp.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Events to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Events to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Events to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Events to Temp\Events to Temp.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Events to Temp.Paths[OLE DB Source Output]"
+              endId="Package\Events to Temp\Events to Temp.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Events to Temp\Events from Stage.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Loop Event Excel files"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{8A8BA1A7-B45F-4C55-8180-10E79B9AF4D8}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loop Event Excel files">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{FFBE9E6F-9C82-49B6-A609-267D87A7E07E}"
+        DTS:ObjectName="{FD872FBB-11FE-48A7-899E-A0FD9D553B29}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Kehitys\Wasteless\TestData" />
+            <FEFEProperty
+              FileSpec="Tapahtuma*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Loop Event Excel files\Load Data to Stage"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{2001E13C-12C3-400D-AC09-52D588FE4A52}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load Data to Stage"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Add FileName"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="82"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]"
+                          name="FileName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACE]([RIGHT](@[User::Tiedosto],[FINDSTRING]([REVERSE](@[User::Tiedosto]),"\\",1) - 1),".xlsx","")</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACE(RIGHT(@[User::Tiedosto],FINDSTRING(REVERSE(@[User::Tiedosto]),"\\",1) - 1),".xlsx","")</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="Tapahtumat from Excel"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">Tapahtumat$</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Events]"
+                      connectionManagerRefId="Package.ConnectionManagers[Events]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Pvm]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Pvm]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Pvm]"
+                          name="Pvm"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Selite]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Selite]"
+                          length="255"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Selite]"
+                          name="Selite"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Vaikutus ruokailuun]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Vaikutus ruokailuun]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Vaikutus ruokailuun]"
+                          name="Vaikutus ruokailuun"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Eväät]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Eväät]"
+                          length="255"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Eväät]"
+                          name="Eväät"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Pvm]"
+                          dataType="date"
+                          name="Pvm" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Selite]"
+                          dataType="wstr"
+                          length="255"
+                          name="Selite" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Vaikutus ruokailuun]"
+                          dataType="wstr"
+                          length="255"
+                          name="Vaikutus ruokailuun" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].ExternalColumns[Eväät]"
+                          dataType="wstr"
+                          length="255"
+                          name="Eväät" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Pvm]"
+                          dataType="date"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Pvm]"
+                          name="Pvm" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Selite]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Selite]"
+                          name="Selite" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Vaikutus ruokailuun]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Vaikutus ruokailuun]"
+                          name="Vaikutus ruokailuun" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Eväät]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[Eväät]"
+                          name="Eväät" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Tapahtumat to Stage schema"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Stage].[Event]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Connections[OleDbConnection]"
+                      connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].Columns[Pvm]"
+                          cachedDataType="date"
+                          cachedName="Pvm"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Pvm]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Pvm]" />
+                        <inputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].Columns[Selite]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Selite"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Selite]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Selite]" />
+                        <inputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].Columns[Vaikutus ruokailuun]"
+                          cachedDataType="i4"
+                          cachedName="Vaikutus ruokailuun"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Vaikutus ruokailuun]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Vaikutus ruokailuun]" />
+                        <inputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].Columns[Eväät]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Eväät"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Evaat]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output].Columns[Eväät]" />
+                        <inputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].Columns[FileName]"
+                          cachedDataType="wstr"
+                          cachedLength="82"
+                          cachedName="FileName"
+                          externalMetadataColumnId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tiedosto]"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Pvm]"
+                          dataType="dbTimeStamp"
+                          name="Pvm" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Selite]"
+                          dataType="wstr"
+                          length="255"
+                          name="Selite" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Vaikutus ruokailuun]"
+                          dataType="bool"
+                          name="Vaikutus ruokailuun" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Evaat]"
+                          dataType="i4"
+                          name="Evaat" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tiedosto]"
+                          dataType="wstr"
+                          length="255"
+                          name="Tiedosto" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Loop Event Excel files\Load Data to Stage.Paths[Derived Column Output]"
+                  endId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Loop Event Excel files\Load Data to Stage.Paths[Excel Source Output]"
+                  endId="Package\Loop Event Excel files\Load Data to Stage\Add FileName.Inputs[Derived Column Input]"
+                  name="Excel Source Output"
+                  startId="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel.Outputs[Excel Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{D78C5E1C-B7F5-46A1-AB30-D1A5E411849F}"
+          DTS:ObjectName="{D78C5E1C-B7F5-46A1-AB30-D1A5E411849F}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Tiedosto" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Events to DW schema"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{86F18E5B-3C22-4383-BD1C-60E83D0520FC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Events to DW schema"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="merge DW.FacEventCalendar as Target&#xA;using Temp.EventCalendar as Source&#xA;on Target.DateSid = Source.DateSid and Target.LocationSid = Source.LocationSid and Target.EventDesc = Source.EventDesc&#xA;when matched and (coalesce(Target.PackedLunchCount,0) != coalesce(Source.PackedLunchCount,'') OR coalesce(Target.EffectToMealCount,0) != coalesce(Source.EffectToMealCount,''))  then update&#xA;set Target.PackedLunchCount = Source.PackedLunchCount,&#xA;Target.EffectToMealCount = Source.EffectToMealCount&#xA;when not matched then insert&#xA;(DateSid, LocationSid, EventDesc, PackedLunchCount, EffectToMealCount)&#xA;values (Source.DateSid, Source.LocationSid, Source.EventDesc, Source.PackedLunchCount, Source.EffectToMealCount);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Stage"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{30C6CA7D-EF17-4117-BFCF-A386F41BF4CE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Stage"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="truncate table stage.event&#xA;truncate table temp.eventcalendar" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{0746A9DA-60C8-4B6F-85B4-455D1640C3F9}"
+      DTS:From="Package\Truncate Stage"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Loop Event Excel files" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE0F9A9C-3542-4904-92F4-12FE1124DB92}"
+      DTS:From="Package\Loop Event Excel files"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Events to Temp" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{7E8C179D-8BD4-4348-8C45-F115D928C94E}"
+      DTS:From="Package\Events to Temp"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Merge Events to DW schema" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Events to Temp"
+          TopLeft="616,402" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Loop Event Excel files\Load Data to Stage"
+          TopLeft="52,63" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="257,192"
+          Size="257,235"
+          Id="Package\Loop Event Excel files"
+          TopLeft="514,92" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\Merge Events to DW schema"
+          TopLeft="587,534" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Truncate Stage"
+          TopLeft="237,112" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="388,133">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="126,76.5"
+              Start="0,0"
+              End="118.5,76.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="59,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="59,0"
+                    Point2="63,0"
+                    Point3="63,4" />
+                  <mssgle:LineSegment
+                    End="63,72.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63,72.5"
+                    Point2="63,76.5"
+                    Point3="67,76.5" />
+                  <mssgle:LineSegment
+                    End="118.5,76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="642.5,327">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="50,75"
+              Start="0,0"
+              End="50,67.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.5"
+                    Point2="0,37.5"
+                    Point3="4,37.5" />
+                  <mssgle:LineSegment
+                    End="46,37.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46,37.5"
+                    Point2="50,37.5"
+                    Point3="50,41.5" />
+                  <mssgle:LineSegment
+                    End="50,67.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="693.5,444">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,90"
+              Start="0,0"
+              End="0,82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Events to Temp">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Events to Temp\Events to Temp"
+          TopLeft="416,461" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Events to Temp\Events from Stage"
+          TopLeft="495,196" />
+        <EdgeLayout
+          Id="Package\Events to Temp.Paths[OLE DB Source Output]"
+          TopLeft="577.5,238">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-85,223"
+              Start="0,0"
+              End="-85,215.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,107.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,107.5"
+                    Point2="0,111.5"
+                    Point3="-4,111.5" />
+                  <mssgle:LineSegment
+                    End="-81,111.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-81,111.5"
+                    Point2="-85,111.5"
+                    Point3="-85,115.5" />
+                  <mssgle:LineSegment
+                    End="-85,215.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Events to Temp\Events from Stage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Events to Temp\Events to Temp">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Loop Event Excel files\Load Data to Stage">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel"
+          TopLeft="313,141" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Loop Event Excel files\Load Data to Stage\Add FileName"
+          TopLeft="372,248" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema"
+          TopLeft="366,369" />
+        <EdgeLayout
+          Id="Package\Loop Event Excel files\Load Data to Stage.Paths[Excel Source Output]"
+          TopLeft="407.5,183">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="36.5,65"
+              Start="0,0"
+              End="36.5,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.5"
+                    Point2="0,32.5"
+                    Point3="4,32.5" />
+                  <mssgle:LineSegment
+                    End="32.5,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.5,32.5"
+                    Point2="36.5,32.5"
+                    Point3="36.5,36.5" />
+                  <mssgle:LineSegment
+                    End="36.5,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Event Excel files\Load Data to Stage.Paths[Derived Column Output]"
+          TopLeft="444,290">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="31,79"
+              Start="0,0"
+              End="31,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.5"
+                    Point2="0,39.5"
+                    Point3="4,39.5" />
+                  <mssgle:LineSegment
+                    End="27,39.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27,39.5"
+                    Point2="31,39.5"
+                    Point3="31,43.5" />
+                  <mssgle:LineSegment
+                    End="31,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat from Excel">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Event Excel files\Load Data to Stage\Tapahtumat to Stage schema">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

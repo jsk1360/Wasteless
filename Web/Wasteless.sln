@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wasteless", "Wasteless\Wasteless.csproj", "{8C89518D-94CB-4C67-BFCE-976AB0265EEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C89518D-94CB-4C67-BFCE-976AB0265EEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C89518D-94CB-4C67-BFCE-976AB0265EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C89518D-94CB-4C67-BFCE-976AB0265EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C89518D-94CB-4C67-BFCE-976AB0265EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

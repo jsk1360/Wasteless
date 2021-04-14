@@ -1,0 +1,8 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsStorage": "",
+    "WastelessDb": "DRIVER={ODBC Driver 17 for SQL Server};SERVER=connectionString;DATABASE=db;UID=käyttäjä;PWD=salasana"
+  }
+}

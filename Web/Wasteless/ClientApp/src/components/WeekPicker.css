@@ -1,0 +1,68 @@
+﻿.week-picker {
+    width: 200px;
+}
+
+.DayPicker-wrapper {
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.SelectedWeek .DayPicker-Month {
+    border-collapse: separate;
+}
+
+.SelectedWeek .DayPicker-WeekNumber {
+    outline: none;
+}
+
+.SelectedWeek .DayPicker-Day {
+    outline: none;
+    border: 1px solid transparent;
+}
+
+.SelectedWeek .DayPicker-Day--hoverRange {
+    background-color: #ceffd0 !important;
+    border-radius: 0 !important;
+}
+
+.SelectedWeek .DayPicker-Day--selectedRange {
+    background-color: #7ef583 !important;
+    border-top-color: #7ef583;
+    border-bottom-color: #7ef583;
+    border-left-color: #7ef583;
+    border-right-color: #7ef583;
+}
+
+.SelectedWeek .DayPicker-Day--selectedRangeStart {
+    background-color: #7ef583 !important;
+    border-left: 1px solid #7ef583;
+}
+
+.SelectedWeek .DayPicker-Day--selectedRangeEnd {
+    background-color: #7ef583 !important;
+    border-right: 1px solid #7ef583;
+}
+
+.SelectedWeek .DayPicker-Day--selectedRange:not(.DayPicker-Day--outside).DayPicker-Day--selected,
+.SelectedWeek .DayPicker-Day--hoverRange:not(.DayPicker-Day--outside).DayPicker-Day--selected {
+    border-radius: 0 !important;
+    color: black !important;
+}
+
+.SelectedWeek .DayPicker-Day--hoverRange:hover {
+    border-radius: 0 !important;
+}
+
+.SelectedWeek .DayPicker-Day:nth-last-child(-n+2) {
+    display: none;
+}
+
+.SelectedWeek .DayPicker-Weekday:nth-last-child(-n+2) {
+    display: none;
+}
+
+.card-body-label {
+    min-width: 80px;
+}

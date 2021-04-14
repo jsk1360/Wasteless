@@ -1,0 +1,1349 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/7/2020 7:31:03 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName=""
+  DTS:CreatorName=""
+  DTS:DTSID="{1044870F-D3B7-4024-90B1-B5E03C571E53}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="1035"
+  DTS:ObjectName="StudentCount"
+  DTS:PackageType="5"
+  DTS:VersionBuild="28"
+  DTS:VersionGUID="{1CAC1AF7-3970-4A65-B3B5-8F4CD455B7EB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Studentcount]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{FD6EF660-E296-4118-8FB2-EA93EEF68D24}"
+      DTS:ObjectName="Studentcount">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ @[User::Tiedosto] +";Extended Properties=\"Excel 12.0 XML;HDR=NO\";"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\kehitys\wasteless\testdata\oppilasmäärä_lapua_yläkoulu.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=NO&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{51436563-1968-431B-A2E3-1E9AC0E0A2B3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Tiedosto">
+      <DTS:VariableValue
+        DTS:DataType="8">c:\kehitys\wasteless\testdata\oppilasmäärä_lapua_yläkoulu.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data to Temp schema"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{59eb1783-300c-45f2-bd88-cb2ee466b02d}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data to Temp schema"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data to Temp schema\Data to Temp schema"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Data to Temp schema"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Temp].[Menu]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data to Temp schema\Data to Temp schema.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[DateSID]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="DateSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[DateSID]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[LocationSID]"
+                      cachedDataType="i4"
+                      cachedName="LocationSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[WeekDay]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="WeekDay"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[WeekDay]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[WeekDay]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[Weeks]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="Weeks"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Weeks]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[Weeks]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[Menu]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="Menu"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Menu]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[Menu]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[MenuItem]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MenuItem"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[MenuItem]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[MenuItem]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[StartDateSID]"
+                      cachedDataType="i4"
+                      cachedName="StartDateSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[StartDateSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[StartDateSID]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[EndDateSID]"
+                      cachedDataType="i4"
+                      cachedName="EndDateSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[EndDateSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[EndDateSID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[WeekDay]"
+                      dataType="wstr"
+                      length="50"
+                      name="WeekDay" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Menu]"
+                      dataType="wstr"
+                      length="128"
+                      name="Menu" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[MenuItem]"
+                      dataType="wstr"
+                      length="255"
+                      name="MenuItem" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[StartDateSID]"
+                      dataType="i4"
+                      name="StartDateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[EndDateSID]"
+                      dataType="i4"
+                      name="EndDateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Weeks]"
+                      dataType="wstr"
+                      length="255"
+                      name="Weeks" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      dataType="i4"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data to Temp schema\Student count data from Stage"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Student count data from Stage"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Stage].[Menu]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">-- Unpivot the table.  
+select data.WeekDay, data.Weeks, Menu, MenuItem, convert(int,StartDateSID) StartDateSID, convert(int,EndDateSID) EndDateSID, DateSID, LocationSID 
+from (
+SELECT LocationSID, WeekDay, Menu, Ruokalaji MenuItem,
+ StartDateSID,EndDateSID,
+ (select case when menu = 'F2' then replace(F2,' ','') when menu = 'F3' then replace(F3,' ','') when menu = 'F4' then replace(F4,' ','') when menu = 'F5' then replace(F5,' ','') else replace(F6,' ','') end from Stage.Menu x where x.F1 = 'Viikot' and x.Tiedosto = unpvt.Tiedosto  ) as Weeks
+FROM   
+   (SELECT F1 WeekDay, F2, F3, F4, F5, F6,  (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 2) as City
+, (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 3) as LocationName
+, (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 4) as StartDateSID
+, (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 5) as EndDateSID, Tiedosto 
+   FROM stage.Menu where F1 &lt;&gt; 'Viikko') r  
+UNPIVOT  
+   (Ruokalaji FOR Menu IN   
+      (F2, F3, F4, F5, F6)  
+)AS unpvt join DW.DimLocation l on l.City = unpvt.City and l.LocationName = unpvt.LocationName
+) as Data
+join DW.DimDate t on t.DayName = WeekDay and t.WeekNumber1 in (select rtrim(ltrim(value)) from Split(Data.Weeks, ',',1)) and t.DateSID between StartDateSID and EndDateSID
+
+where WeekDay &lt;&gt; 'Viikot'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data to Temp schema\Student count data from Stage.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      length="4000"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      name="DateSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      name="LocationSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[WeekDay]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[WeekDay]"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[WeekDay]"
+                      name="WeekDay"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[Weeks]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Weeks]"
+                      length="4000"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[Weeks]"
+                      name="Weeks"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[Menu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Menu]"
+                      length="128"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[Menu]"
+                      name="Menu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[MenuItem]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[MenuItem]"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[MenuItem]"
+                      name="MenuItem"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[StartDateSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[StartDateSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[StartDateSID]"
+                      name="StartDateSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[EndDateSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[EndDateSID]"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].Columns[EndDateSID]"
+                      name="EndDateSID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      dataType="i4"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[WeekDay]"
+                      dataType="wstr"
+                      length="255"
+                      name="WeekDay" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Weeks]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Weeks" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Menu]"
+                      dataType="wstr"
+                      length="128"
+                      name="Menu" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[MenuItem]"
+                      dataType="wstr"
+                      length="255"
+                      name="MenuItem" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[StartDateSID]"
+                      dataType="i4"
+                      name="StartDateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output].ExternalColumns[EndDateSID]"
+                      dataType="i4"
+                      name="EndDateSID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[WeekDay]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[WeekDay]"
+                      name="WeekDay" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[Weeks]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[Weeks]"
+                      name="Weeks" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[Menu]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[Menu]"
+                      name="Menu" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[MenuItem]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[MenuItem]"
+                      name="MenuItem" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[StartDateSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[StartDateSID]"
+                      name="StartDateSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[EndDateSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[EndDateSID]"
+                      name="EndDateSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      name="DateSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      name="LocationSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data to Temp schema.Paths[OLE DB Source Output]"
+              endId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data to Temp schema\Student count data from Stage.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Loop Student count Excel files"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{ec0c52f3-0862-488e-81cd-dd917ac71e07}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loop Student count Excel files">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{9dcec191-f39b-422f-a4fe-359c4b5f2891}"
+        DTS:ObjectName="{FD872FBB-11FE-48A7-899E-A0FD9D553B29}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Kehitys\Wasteless\TestData" />
+            <FEFEProperty
+              FileSpec="Oppilasm*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Loop Student count Excel files\Load to Stage"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{c3381a41-8f8e-4093-92bd-26f31f97e4ca}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load to Stage"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Loop Student count Excel files\Load to Stage\Add grade"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Add grade"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Inputs[Derived Column Input].Columns[Luokka]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Luokka"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\53:invalid" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Loop Student count Excel files\Load to Stage\Add grade.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Output].Columns[Vuosiluokka]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="1"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Output].Columns[Vuosiluokka]"
+                          name="Vuosiluokka"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[LEFT](#{Package\Loop Student count Excel files\Load to Stage\53:invalid},1)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">LEFT(Luokka,1)</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Loop Student count Excel files\Load to Stage\Add grade.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Student count to Stage schema"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Stage].[StudentCount]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Connections[OleDbConnection]"
+                      connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Luokka]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Luokka"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Luokka]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\53:invalid" />
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Tytöt]"
+                          cachedDataType="r8"
+                          cachedName="Tytöt"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tytöt]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\54:invalid" />
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Pojat]"
+                          cachedDataType="r8"
+                          cachedName="Pojat"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Pojat]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\55:invalid" />
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Lukuvuosi]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Lukuvuosi"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Lukuvuosi]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\56:invalid" />
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Vuosiluokka]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="Vuosiluokka"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Vuosiluokka]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Output].Columns[Vuosiluokka]" />
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Koulu]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Koulu"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Koulu]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\57:invalid" />
+                        <inputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].Columns[Paikkakunta]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Paikkakunta"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Paikkakunta]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\58:invalid" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Luokka]"
+                          dataType="wstr"
+                          length="50"
+                          name="Luokka" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tytöt]"
+                          dataType="i4"
+                          name="Tytöt" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Pojat]"
+                          dataType="i4"
+                          name="Pojat" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Lukuvuosi]"
+                          dataType="wstr"
+                          length="50"
+                          name="Lukuvuosi" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Vuosiluokka]"
+                          dataType="wstr"
+                          length="1"
+                          name="Vuosiluokka" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Koulu]"
+                          dataType="wstr"
+                          length="50"
+                          name="Koulu" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Paikkakunta]"
+                          dataType="wstr"
+                          length="50"
+                          name="Paikkakunta" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="Studentcount from Excel"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">Luokittain$</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Studentcount]"
+                      connectionManagerRefId="Package.ConnectionManagers[Studentcount]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F1]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F1]"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F1]"
+                          name="F1"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F2]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F2]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F2]"
+                          name="F2"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F3]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F3]"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F3]"
+                          name="F3"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F4]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F4]"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F4]"
+                          name="F4"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F5]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F5]"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F5]"
+                          name="F5"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F6]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F6]"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].Columns[F6]"
+                          name="F6"
+                          truncationRowDisposition="IgnoreFailure" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F1]"
+                          dataType="wstr"
+                          length="255"
+                          name="F1" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F2]"
+                          dataType="r8"
+                          name="F2" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F3]"
+                          dataType="r8"
+                          name="F3" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F4]"
+                          dataType="wstr"
+                          length="255"
+                          name="F4" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F5]"
+                          dataType="wstr"
+                          length="255"
+                          name="F5" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output].ExternalColumns[F6]"
+                          dataType="wstr"
+                          length="255"
+                          name="F6" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F1]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F1]"
+                          name="F1" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F2]"
+                          dataType="r8"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F2]"
+                          name="F2" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F3]"
+                          dataType="r8"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F3]"
+                          name="F3" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F4]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F4]"
+                          name="F4" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F5]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F5]"
+                          name="F5" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F6]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[F6]"
+                          name="F6" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Loop Student count Excel files\Load to Stage.Paths[Derived Column Output]"
+                  endId="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Loop Student count Excel files\Load to Stage\Add grade.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Loop Student count Excel files\Load to Stage.Paths[Excel Source Output]"
+                  endId="Package\Loop Student count Excel files\Load to Stage\Add grade.Inputs[Derived Column Input]"
+                  name="Excel Source Output"
+                  startId="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel.Outputs[Excel Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{063967A7-FC9F-4B4B-8B75-B22CF41C211B}"
+          DTS:ObjectName="{063967A7-FC9F-4B4B-8B75-B22CF41C211B}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Tiedosto" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge studentcount to DW schema"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{3580246A-0FC7-48F2-97B2-E84002582BCA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge studentcount to DW schema"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate stage"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{06A19DF7-2883-45B5-9009-EF546BBD7963}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate stage"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="truncate table stage.studentcount&#xA;truncate table temp.studentcount" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DDD6230D-456D-470E-9A33-A683FA871B51}"
+      DTS:From="Package\Truncate stage"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Loop Student count Excel files" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Data to Temp schema"
+          TopLeft="636,450" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Loop Student count Excel files\Load to Stage"
+          TopLeft="52,63" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="257,192"
+          Size="257,235"
+          Id="Package\Loop Student count Excel files"
+          TopLeft="590,179" />
+        <NodeLayout
+          Size="245,42"
+          Id="Package\Merge studentcount to DW schema"
+          TopLeft="656,559" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Truncate stage"
+          TopLeft="369,131" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="518,152">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72,144.5"
+              Start="0,0"
+              End="64.5,144.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32,0"
+                    Point2="36,0"
+                    Point3="36,4" />
+                  <mssgle:LineSegment
+                    End="36,140.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36,140.5"
+                    Point2="36,144.5"
+                    Point3="40,144.5" />
+                  <mssgle:LineSegment
+                    End="64.5,144.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data to Temp schema">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Data to Temp schema\Data to Temp schema"
+          TopLeft="455,242" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Data to Temp schema\Student count data from Stage"
+          TopLeft="384,114" />
+        <EdgeLayout
+          Id="Package\Data to Temp schema.Paths[OLE DB Source Output]"
+          TopLeft="496,156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.5,86"
+              Start="0,0"
+              End="50.5,78.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39"
+                    Point2="0,43"
+                    Point3="4,43" />
+                  <mssgle:LineSegment
+                    End="46.5,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46.5,43"
+                    Point2="50.5,43"
+                    Point3="50.5,47" />
+                  <mssgle:LineSegment
+                    End="50.5,78.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Loop Student count Excel files\Load to Stage">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="227,42"
+          Id="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema"
+          TopLeft="316,389" />
+        <NodeLayout
+          Size="127,42"
+          Id="Package\Loop Student count Excel files\Load to Stage\Add grade"
+          TopLeft="320,264" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel"
+          TopLeft="320,163" />
+        <EdgeLayout
+          Id="Package\Loop Student count Excel files\Load to Stage.Paths[Excel Source Output]"
+          TopLeft="417.5,205">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-34,59"
+              Start="0,0"
+              End="-34,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5"
+                    Point2="0,29.5"
+                    Point3="-4,29.5" />
+                  <mssgle:LineSegment
+                    End="-30,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30,29.5"
+                    Point2="-34,29.5"
+                    Point3="-34,33.5" />
+                  <mssgle:LineSegment
+                    End="-34,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-25,34.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Student count Excel files\Load to Stage.Paths[Derived Column Output]"
+          TopLeft="383.5,306">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,83"
+              Start="0,0"
+              End="46,75.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.5"
+                    Point2="0,41.5"
+                    Point3="4,41.5" />
+                  <mssgle:LineSegment
+                    End="42,41.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42,41.5"
+                    Point2="46,41.5"
+                    Point3="46,45.5" />
+                  <mssgle:LineSegment
+                    End="46,75.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="15,46.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Student count Excel files\Load to Stage\Student count to Stage schema">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Student count Excel files\Load to Stage\Studentcount from Excel">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,5 @@
+azure-functions
+pypyodbc
+pandas
+numpy
+scikit-learn

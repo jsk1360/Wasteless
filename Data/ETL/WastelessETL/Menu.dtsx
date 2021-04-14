@@ -1,0 +1,1454 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/7/2020 7:31:03 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName=""
+  DTS:CreatorName=""
+  DTS:DTSID="{85289E54-AD93-465F-B7F1-410E18BFC8DE}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="1035"
+  DTS:ObjectName="Menu"
+  DTS:PackageType="5"
+  DTS:VersionBuild="37"
+  DTS:VersionGUID="{6D8EAD8F-A152-404A-A7D5-38D6469CFB20}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Menu]"
+      DTS:CreationName="EXCEL"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{5EF8A5A9-982F-4C80-BC1C-735834DF8C93}"
+      DTS:ObjectName="Menu">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ @[User::Tiedosto] +";Extended Properties=\"Excel 12.0 XML;HDR=NO\";"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\kehitys\Wasteless\TestData\Ruokalista_Lapua_Yläkoulu_20190801_20200630.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=NO&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{209CEF6D-5844-4000-8B4C-C92372AE0D8A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Tiedosto">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\kehitys\Wasteless\TestData\Ruokalista_Lapua_Yläkoulu_20190801_20200630.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data to Temp schema"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B5FEA651-CE3C-4943-B236-984734F56BB2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data to Temp schema"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data to Temp schema\Data to Temp schema"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Data to Temp schema"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Temp].[Menu]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data to Temp schema\Data to Temp schema.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[DateSID]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="DateSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[DateSID]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[LocationSID]"
+                      cachedDataType="i4"
+                      cachedName="LocationSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[WeekDay]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="WeekDay"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[WeekDay]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[WeekDay]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[Weeks]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="Weeks"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Weeks]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[Weeks]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[Menu]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="Menu"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Menu]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[Menu]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[MenuItem]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MenuItem"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[MenuItem]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[MenuItem]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[StartDateSID]"
+                      cachedDataType="i4"
+                      cachedName="StartDateSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[StartDateSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[StartDateSID]" />
+                    <inputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].Columns[EndDateSID]"
+                      cachedDataType="i4"
+                      cachedName="EndDateSID"
+                      externalMetadataColumnId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[EndDateSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[EndDateSID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[WeekDay]"
+                      dataType="wstr"
+                      length="50"
+                      name="WeekDay" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Menu]"
+                      dataType="wstr"
+                      length="128"
+                      name="Menu" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[MenuItem]"
+                      dataType="wstr"
+                      length="255"
+                      name="MenuItem" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[StartDateSID]"
+                      dataType="i4"
+                      name="StartDateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[EndDateSID]"
+                      dataType="i4"
+                      name="EndDateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[Weeks]"
+                      dataType="wstr"
+                      length="255"
+                      name="Weeks" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[DateSID]"
+                      dataType="i4"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Data to Temp schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data to Temp schema\Menu data from Stage"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Menu data from Stage"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Stage].[Menu]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">-- Unpivot the table.  
+select data.WeekDay, data.Weeks, Menu, MenuItem, convert(int,StartDateSID) StartDateSID, convert(int,EndDateSID) EndDateSID, DateSID, LocationSID 
+from (
+SELECT LocationSID, WeekDay, Menu, Ruokalaji MenuItem,
+ StartDateSID,EndDateSID,
+ (select case when menu = 'F2' then replace(F2,' ','') when menu = 'F3' then replace(F3,' ','') when menu = 'F4' then replace(F4,' ','') when menu = 'F5' then replace(F5,' ','') else replace(F6,' ','') end from Stage.Menu x where x.F1 = 'Viikot' and x.Tiedosto = unpvt.Tiedosto  ) as Weeks
+FROM   
+   (SELECT F1 WeekDay, F2, F3, F4, F5, F6,  (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 2) as City
+, (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 3) as LocationName
+, (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 4) as StartDateSID
+, (select Value from dbo.Split(Tiedosto,'_',1) where OrderNbr = 5) as EndDateSID, Tiedosto 
+   FROM stage.Menu where F1 &lt;&gt; 'Viikko') r  
+UNPIVOT  
+   (Ruokalaji FOR Menu IN   
+      (F2, F3, F4, F5, F6)  
+)AS unpvt join DW.DimLocation l on l.City = unpvt.City and l.LocationName = unpvt.LocationName
+) as Data
+join DW.DimDate t on t.DayName = WeekDay and t.WeekNumber1 in (select rtrim(ltrim(value)) from Split(Data.Weeks, ',',1)) and t.DateSID between StartDateSID and EndDateSID
+
+where WeekDay &lt;&gt; 'Viikot'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data to Temp schema\Menu data from Stage.Connections[OleDbConnection]"
+                  connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      length="4000"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[DateSID]"
+                      name="DateSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[LocationSID]"
+                      name="LocationSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[WeekDay]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[WeekDay]"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[WeekDay]"
+                      name="WeekDay"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[Weeks]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Weeks]"
+                      length="4000"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[Weeks]"
+                      name="Weeks"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[Menu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Menu]"
+                      length="128"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[Menu]"
+                      name="Menu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[MenuItem]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[MenuItem]"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[MenuItem]"
+                      name="MenuItem"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[StartDateSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[StartDateSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[StartDateSID]"
+                      name="StartDateSID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[EndDateSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[EndDateSID]"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].Columns[EndDateSID]"
+                      name="EndDateSID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[DateSID]"
+                      dataType="i4"
+                      name="DateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[LocationSID]"
+                      dataType="i4"
+                      name="LocationSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[WeekDay]"
+                      dataType="wstr"
+                      length="255"
+                      name="WeekDay" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Weeks]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Weeks" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[Menu]"
+                      dataType="wstr"
+                      length="128"
+                      name="Menu" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[MenuItem]"
+                      dataType="wstr"
+                      length="255"
+                      name="MenuItem" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[StartDateSID]"
+                      dataType="i4"
+                      name="StartDateSID" />
+                    <externalMetadataColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output].ExternalColumns[EndDateSID]"
+                      dataType="i4"
+                      name="EndDateSID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[WeekDay]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[WeekDay]"
+                      name="WeekDay" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[Weeks]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[Weeks]"
+                      name="Weeks" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[Menu]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[Menu]"
+                      name="Menu" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[MenuItem]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[MenuItem]"
+                      name="MenuItem" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[StartDateSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[StartDateSID]"
+                      name="StartDateSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[EndDateSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[EndDateSID]"
+                      name="EndDateSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[DateSID]"
+                      name="DateSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[LocationSID]"
+                      name="LocationSID" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data to Temp schema.Paths[OLE DB Source Output]"
+              endId="Package\Data to Temp schema\Data to Temp schema.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data to Temp schema\Menu data from Stage.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Loop Menu Excel files"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{F6BE5C6E-021D-4C64-8B29-CCEF7FA181A1}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loop Menu Excel files">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{9ECBDB4D-EC88-4E6B-BAB7-EC84603E3598}"
+        DTS:ObjectName="{FD872FBB-11FE-48A7-899E-A0FD9D553B29}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Kehitys\Wasteless\TestData" />
+            <FEFEProperty
+              FileSpec="ruokalista*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Loop Menu Excel files\Load to Stage"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{AFF4C355-0D49-46B3-B6A9-1DCB703C82D1}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load to Stage"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Loop Menu Excel files\Load to Stage\Add FileName"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Add FileName"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="82"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]"
+                          name="FileName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACE]([RIGHT](@[User::Tiedosto],[FINDSTRING]([REVERSE](@[User::Tiedosto]),"\\",1) - 1),".xlsx","")</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACE(RIGHT(@[User::Tiedosto],FINDSTRING(REVERSE(@[User::Tiedosto]),"\\",1) - 1),".xlsx","")</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="Menu from Excel"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">Taulukko1$</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Menu]"
+                      connectionManagerRefId="Package.ConnectionManagers[Menu]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F1]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F1]"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F1]"
+                          name="F1"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F2]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F2]"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F2]"
+                          name="F2"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F3]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F3]"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F3]"
+                          name="F3"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F4]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F4]"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F4]"
+                          name="F4"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F5]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F5]"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F5]"
+                          name="F5"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F6]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F6]"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F6]"
+                          name="F6"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F1]"
+                          dataType="wstr"
+                          length="255"
+                          name="F1" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F2]"
+                          dataType="wstr"
+                          length="255"
+                          name="F2" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F3]"
+                          dataType="wstr"
+                          length="255"
+                          name="F3" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F4]"
+                          dataType="wstr"
+                          length="255"
+                          name="F4" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F5]"
+                          dataType="wstr"
+                          length="255"
+                          name="F5" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].ExternalColumns[F6]"
+                          dataType="wstr"
+                          length="255"
+                          name="F6" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F1]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F1]"
+                          name="F1" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F2]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F2]"
+                          name="F2" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F3]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F3]"
+                          name="F3" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F4]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F4]"
+                          name="F4" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F5]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F5]"
+                          name="F5" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F6]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Error Output].Columns[F6]"
+                          name="F6" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Menu to Stage schema"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Stage].[Menu]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Connections[OleDbConnection]"
+                      connectionManagerID="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Wasteless]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[F1]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="F1"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F1]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F1]" />
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[F2]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="F2"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F2]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F2]" />
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[F3]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="F3"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F3]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F3]" />
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[F4]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="F4"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F4]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F4]" />
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[F5]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="F5"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F5]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F5]" />
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[F6]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="F6"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F6]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output].Columns[F6]" />
+                        <inputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].Columns[FileName]"
+                          cachedDataType="wstr"
+                          cachedLength="82"
+                          cachedName="FileName"
+                          externalMetadataColumnId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tiedosto]"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Output].Columns[FileName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F1]"
+                          dataType="wstr"
+                          length="255"
+                          name="F1" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F2]"
+                          dataType="wstr"
+                          length="255"
+                          name="F2" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F3]"
+                          dataType="wstr"
+                          length="255"
+                          name="F3" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F4]"
+                          dataType="wstr"
+                          length="255"
+                          name="F4" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F5]"
+                          dataType="wstr"
+                          length="255"
+                          name="F5" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[F6]"
+                          dataType="wstr"
+                          length="255"
+                          name="F6" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input].ExternalColumns[Tiedosto]"
+                          dataType="wstr"
+                          length="500"
+                          name="Tiedosto" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Loop Menu Excel files\Load to Stage.Paths[Derived Column Output]"
+                  endId="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Loop Menu Excel files\Load to Stage.Paths[Excel Source Output]"
+                  endId="Package\Loop Menu Excel files\Load to Stage\Add FileName.Inputs[Derived Column Input]"
+                  name="Excel Source Output"
+                  startId="Package\Loop Menu Excel files\Load to Stage\Menu from Excel.Outputs[Excel Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{5252E13A-961B-4F04-90DF-378FFFE93B5B}"
+          DTS:ObjectName="{5252E13A-961B-4F04-90DF-378FFFE93B5B}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Tiedosto" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge To DW schema"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4E31764A-6C6F-4DE6-B521-0B52097D8B23}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge To DW schema"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="merge DW.FacMenu as Target&#xA;using Temp.Menu as Source&#xA;on Target.DateSid = Source.DateSid and Target.LocationSid = Source.LocationSid&#xA;when matched and coalesce(Target.Menu,'') != coalesce(Source.MenuItem,'') then update&#xA;set Target.Menu = Source.MenuItem, ModifiedTime = getdate()&#xA;when not matched then insert&#xA;(Menu, DateSid, LocationSid,ModifiedTime)&#xA;values (Source.MenuItem, Source.DateSid, Source.LocationSid, getdate());" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate stage"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{96B9E1F1-1E3C-4003-BF3B-8FB0AE383205}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate stage"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6141CE8D-AD28-4B6F-9D48-4C7F99B96276}"
+          SQLTask:SqlStatementSource="truncate table stage.menu&#xA;truncate table temp.menu" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{667CA398-AE1D-4B21-A707-12FB0018B6DC}"
+      DTS:From="Package\Truncate stage"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Loop Menu Excel files" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{2DADCFD7-C949-40A8-B53D-FDD048AC58EE}"
+      DTS:From="Package\Loop Menu Excel files"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Data to Temp schema" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{FB877AB2-75D4-4D93-9A9E-D41ABDB8F7CA}"
+      DTS:From="Package\Data to Temp schema"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Merge To DW schema" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Data to Temp schema"
+          TopLeft="621,410" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Loop Menu Excel files\Load to Stage"
+          TopLeft="52,63" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="257,192"
+          Size="257,235"
+          Id="Package\Loop Menu Excel files"
+          TopLeft="551,117" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Merge To DW schema"
+          TopLeft="587,525" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Truncate stage"
+          TopLeft="293,174" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="442,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="109,39.5"
+              Start="0,0"
+              End="101.5,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="50.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="50.5,0"
+                    Point2="54.5,0"
+                    Point3="54.5,4" />
+                  <mssgle:LineSegment
+                    End="54.5,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="54.5,35.5"
+                    Point2="54.5,39.5"
+                    Point3="58.5,39.5" />
+                  <mssgle:LineSegment
+                    End="101.5,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="679.5,352">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33,58"
+              Start="0,0"
+              End="33,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25"
+                    Point2="0,29"
+                    Point3="4,29" />
+                  <mssgle:LineSegment
+                    End="29,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29,29"
+                    Point2="33,29"
+                    Point3="33,33" />
+                  <mssgle:LineSegment
+                    End="33,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="712.5,452">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-34,73"
+              Start="0,0"
+              End="-34,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.5"
+                    Point2="0,36.5"
+                    Point3="-4,36.5" />
+                  <mssgle:LineSegment
+                    End="-30,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30,36.5"
+                    Point2="-34,36.5"
+                    Point3="-34,40.5" />
+                  <mssgle:LineSegment
+                    End="-34,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data to Temp schema">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Data to Temp schema\Data to Temp schema"
+          TopLeft="455,242" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\Data to Temp schema\Menu data from Stage"
+          TopLeft="384,114" />
+        <EdgeLayout
+          Id="Package\Data to Temp schema.Paths[OLE DB Source Output]"
+          TopLeft="476,156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="70.5,86"
+              Start="0,0"
+              End="70.5,78.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39"
+                    Point2="0,43"
+                    Point3="4,43" />
+                  <mssgle:LineSegment
+                    End="66.5,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="66.5,43"
+                    Point2="70.5,43"
+                    Point3="70.5,47" />
+                  <mssgle:LineSegment
+                    End="70.5,78.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data to Temp schema\Data to Temp schema">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data to Temp schema\Menu data from Stage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Loop Menu Excel files\Load to Stage">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Loop Menu Excel files\Load to Stage\Menu from Excel"
+          TopLeft="313,141" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Loop Menu Excel files\Load to Stage\Add FileName"
+          TopLeft="372,248" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema"
+          TopLeft="366,369" />
+        <EdgeLayout
+          Id="Package\Loop Menu Excel files\Load to Stage.Paths[Excel Source Output]"
+          TopLeft="392,183">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="52,65"
+              Start="0,0"
+              End="52,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.5"
+                    Point2="0,32.5"
+                    Point3="4,32.5" />
+                  <mssgle:LineSegment
+                    End="48,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="48,32.5"
+                    Point2="52,32.5"
+                    Point3="52,36.5" />
+                  <mssgle:LineSegment
+                    End="52,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Menu Excel files\Load to Stage.Paths[Derived Column Output]"
+          TopLeft="444,290">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="15.5,79"
+              Start="0,0"
+              End="15.5,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.5"
+                    Point2="0,39.5"
+                    Point3="4,39.5" />
+                  <mssgle:LineSegment
+                    End="11.5,39.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="11.5,39.5"
+                    Point2="15.5,39.5"
+                    Point3="15.5,43.5" />
+                  <mssgle:LineSegment
+                    End="15.5,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Menu Excel files\Load to Stage\Menu from Excel">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Menu Excel files\Load to Stage\Menu to Stage schema">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

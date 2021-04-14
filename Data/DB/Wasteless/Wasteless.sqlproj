@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Wasteless</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{bde30269-74b0-478a-aac5-9f9b67d01e84}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Wasteless</RootNamespace>
+    <AssemblyName>Wasteless</AssemblyName>
+    <ModelCollation>1035,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>Finnish_Swedish_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="DW\" />
+    <Folder Include="DW\Tables\" />
+    <Folder Include="Stage\" />
+    <Folder Include="Stage\Tables\" />
+    <Folder Include="Temp\" />
+    <Folder Include="Temp\Tables\" />
+    <Folder Include="Security\" />
+    <Folder Include="DW\Views\" />
+    <Folder Include="dbo\Functions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
+    <Build Include="dbo\Tables\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\AspNetUserTokens.sql" />
+    <Build Include="dbo\Tables\DeviceCodes.sql" />
+    <Build Include="dbo\Tables\PersistedGrants.sql" />
+    <Build Include="dbo\Tables\sysdiagrams.sql" />
+    <Build Include="DW\Tables\DimDate.sql" />
+    <Build Include="DW\Tables\DimLocation.sql" />
+    <Build Include="DW\Tables\DimSchoolYear.sql" />
+    <Build Include="DW\Tables\FacEventCalendar.sql" />
+    <Build Include="DW\Tables\FacMenu.sql" />
+    <Build Include="DW\Tables\FacStudentCount.sql" />
+    <Build Include="DW\Tables\FacTimetable.sql" />
+    <Build Include="DW\Tables\FacTimeTableExtra.sql" />
+    <Build Include="DW\Tables\FacWasteless.sql" />
+    <Build Include="DW\Tables\FacWeatherInfo.sql" />
+    <Build Include="Stage\Tables\Weather.sql" />
+    <Build Include="Temp\Tables\EventCalendar.sql" />
+    <Build Include="Temp\Tables\Menu.sql" />
+    <Build Include="Temp\Tables\Timetable.sql" />
+    <Build Include="Security\DW.sql" />
+    <Build Include="Security\Stage.sql" />
+    <Build Include="Security\Temp.sql" />
+    <Build Include="DW\Views\Wasteless.sql" />
+    <Build Include="DW\Views\Menu.sql" />
+    <Build Include="DW\Views\Location.sql" />
+    <Build Include="DW\Views\FacStudentCountPerDay.sql" />
+    <Build Include="DW\Views\Date.sql" />
+    <Build Include="Stage\Tables\Timetable.sql" />
+    <Build Include="Stage\Tables\StudentCount.sql" />
+    <Build Include="Stage\Tables\Menu.sql" />
+    <Build Include="Stage\Tables\Event.sql" />
+    <Build Include="dbo\Functions\Split.sql" />
+    <Build Include="Temp\Tables\StudentCount.sql" />
+  </ItemGroup>
+</Project>
