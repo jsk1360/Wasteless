@@ -28,6 +28,8 @@ namespace Wasteless.Models
         public DateTime ModifiedTime { get; set; }
         public string WeatherInfo { get; set; } = string.Empty;
         public int? MealCountReserved { get; set; }
+        
+        public string? Comment { get; set; }
 
         private DateTime GetDate()
         {
@@ -37,5 +39,11 @@ namespace Wasteless.Models
 
             throw new Exception("Invalid DateSID");
         }
+    }
+
+    public class WasteLimit
+    {
+        public int LocationId { get; set; }
+        public double Limit { get; set; }
     }
 }

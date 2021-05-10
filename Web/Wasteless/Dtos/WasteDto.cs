@@ -5,7 +5,7 @@ namespace Wasteless.Dtos
 {
     public class WasteDto
     {
-        public WasteDto(string location, string city, Menu? menu, Waste waste)
+        public WasteDto(string location, string city, Menu? menu, Waste waste, WasteLimit? limit = null)
         {
             Id = waste.WasteSID;
             LocationId = waste.LocationId;
@@ -34,6 +34,8 @@ namespace Wasteless.Dtos
             PlateWasteKg = waste.PlateWasteKg;
             MealCountReserved = waste.MealCountReserved;
             SpecialMealCount = waste.SpecialMealCount;
+            Comment = waste.Comment;
+            WasteLimit = limit?.Limit;
         }
 
         public int Id { get; set; }
@@ -56,6 +58,9 @@ namespace Wasteless.Dtos
         public double? PlateWasteKg { get; set; }
 
         public int? MealCountReserved { get; set; }
+        
+        public double? WasteLimit { get; set; }
+        public string? Comment { get; set; }
     }
 
     public record MenuDto(string Name, int? LocationId = null);

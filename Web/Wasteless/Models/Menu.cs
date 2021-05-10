@@ -8,6 +8,7 @@ namespace Wasteless.Models
         public string Name { get; set; } = string.Empty;
         public int DateId { get; set; }
         public int LocationId { get; set; }
+        public double? TotalWasteKgAvg { get; set; }
         public DateTime? ModifiedTime { get; set; }
     }
 

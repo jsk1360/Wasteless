@@ -14,5 +14,6 @@ namespace Wasteless.Dtos
         public double? ProductionWasteKg { get; set; }
         public int? SpecialMealCount { get; set; }
         public string Menu { get; set; }
+        public string? Comment { get; set; }
     }
 }

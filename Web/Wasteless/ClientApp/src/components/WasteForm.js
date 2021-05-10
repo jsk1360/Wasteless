@@ -19,6 +19,7 @@ export const WasteForm = (props) => {
         plateWasteKg: "",
         productionWasteKg: "",
         menu: "",
+        comment: "",
     });
 
     const [isSaving, setIsSaving] = useState(false);
@@ -59,8 +60,23 @@ export const WasteForm = (props) => {
             key: "productionWasteKg",
             value: props.waste.productionWasteKg !== null ? props.waste.productionWasteKg : ""
         });
+        dispatch({
+            key: "comment",
+            value: props.waste.comment !== null ? props.waste.comment : ""
+        });
         setIsInitialized(true);
     }, [props.waste, props.menu, isInitialized]);
+    
+    const [overLimit, setOverLimit] = useState(false);
+    
+    useEffect(() => {
+        console.log(formState.lineWasteKg + formState.productionWasteKg + formState.plateWasteKg, props.waste.wasteLimit ,formState.lineWasteKg + formState.productionWasteKg + formState.plateWasteKg > props.waste.wasteLimit);
+        if (formState.lineWasteKg + formState.productionWasteKg + formState.plateWasteKg > props.waste.wasteLimit) { 
+            setOverLimit(true);
+        } else {
+            setOverLimit(false);
+        }
+    }, [props.waste, formState])
 
 
     async function handleSubmit(event) {
@@ -101,7 +117,14 @@ export const WasteForm = (props) => {
             form.productionWasteKg !== "" &&
             form.menu !== "";
 
+        // if (overLimit) {
+        //     return isV && form.comment !== "";
+        // }
         return isV;
+    }
+    
+    function getCommentLabel(overLimit) {
+        return overLimit ? "Kommentoi rajan ylittävää hävikkiä" : "Vapaahetoinen kommentti"
     }
 
     return (
@@ -172,6 +195,17 @@ export const WasteForm = (props) => {
                     className="form-control form-control-sm"
                     type="number"
                 />
+                <>
+                    <Input
+                        changed={({target: {value}}) => dispatch({value: value, key: "comment"})}
+                        value={formState["comment"]}
+                        id={"comment" + formState.comment}
+                        name="comment"
+                        label={getCommentLabel(overLimit)}
+                        className="form-control form-control-sm"
+                        type="text"
+                    />
+                </>
                 <button className="btn btn-primary btn-sm" type="submit" disabled={isSaving || !isValid(formState)}>
                     {isSaving ?
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"> </span> :

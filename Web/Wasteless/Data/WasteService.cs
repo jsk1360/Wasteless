@@ -42,6 +42,8 @@ namespace Wasteless.Data
                 var menu = menus.FirstOrDefault(x =>
                     x.LocationId == locationId && x.DateId == dateSid);
 
+                var limit = GetWasteLimit(menu);
+
                 var wasteDbDto = waste.FirstOrDefault(w => w.DateId == dateSid) ??
                                  new Waste
                                  {
@@ -49,7 +51,7 @@ namespace Wasteless.Data
                                      LocationId = locationId
                                  };
 
-                var wasteDto = new WasteDto(location.Name, location.City, menu, wasteDbDto);
+                var wasteDto = new WasteDto(location.Name, location.City, menu, wasteDbDto, limit);
 
                 wastes.Add(wasteDto);
             }
@@ -67,9 +69,22 @@ namespace Wasteless.Data
             var date = waste.DateId.ToDate();
             if (date == null) return null;
 
-            var wasteDto = await WasteToDto(waste);
+            var dateSid = Convert.ToInt32(date.Value.ToString("yyyyMMdd"));
+
+            var menu = (await connection.QueryAsync<Menu>(d =>
+                d.DateId == dateSid && d.LocationId == waste.LocationId)).FirstOrDefault();
+
+            var limit = GetWasteLimit(menu);
+            var wasteDto = await WasteToDto(waste, limit);
 
             return wasteDto;
+        }
+
+        private static WasteLimit? GetWasteLimit(Menu? menu)
+        {
+            return menu?.TotalWasteKgAvg != null
+                ? new WasteLimit {Limit = menu.TotalWasteKgAvg.Value * 0.1, LocationId = menu.LocationId}
+                : null;
         }
 
         public async Task<IEnumerable<LocationDto>> GetLocations()
@@ -108,14 +123,15 @@ namespace Wasteless.Data
 
                 if (existingMenu == null)
                 {
-                    await connection.InsertAsync(new Menu
+                    existingMenu = new Menu
                     {
                         MenuSID = null,
                         Name = form.Menu,
                         DateId = Convert.ToInt32(form.Date.ToString("yyyyMMdd")),
                         LocationId = form.LocationId,
                         ModifiedTime = DateTime.Now
-                    });
+                    };
+                    await connection.InsertAsync(existingMenu);
                 }
                 else if (!string.Equals(existingMenu.Name, form.Menu, StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -134,10 +150,11 @@ namespace Wasteless.Data
                     form.LineWasteKg,
                     form.ProductionWasteKg,
                     form.PlateWasteKg,
-                    form.MealCountReserved
+                    form.MealCountReserved,
+                    form.Comment
                 });
 
-                return await WasteToDto(existingWaste);
+                return await WasteToDto(existingWaste, GetWasteLimit(existingMenu));
             }
 
             var id = await connection.InsertAsync(ClassMappedNameCache.Get<Waste>(), new
@@ -151,31 +168,34 @@ namespace Wasteless.Data
                 ModifiedTime = DateTime.Now,
                 form.LineWasteKg,
                 form.PlateWasteKg,
-                form.ProductionWasteKg
+                form.ProductionWasteKg,
+                form.Comment
             });
 
-            await connection.MergeAsync(new Menu
+            var newMenu = new Menu
             {
                 MenuSID = 0,
                 Name = form.Menu,
                 LocationId = form.LocationId,
                 DateId = Convert.ToInt32(form.Date.ToString("yyyyMMdd")),
                 ModifiedTime = DateTime.Now
-            }, m => new {m.LocationId, m.DateId});
+            };
+
+            await connection.MergeAsync(newMenu, m => new {m.LocationId, m.DateId});
 
             var newWaste = (await connection.QueryAsync<Waste>(id)).First();
 
-            return await WasteToDto(newWaste);
+            return await WasteToDto(newWaste, GetWasteLimit(newMenu));
         }
 
-        private async Task<WasteDto> WasteToDto(Waste waste)
+        private async Task<WasteDto> WasteToDto(Waste waste, WasteLimit? limit = null)
         {
             await using var connection = new SqlConnection(_connectionString);
             var location = (await connection.QueryAsync<Location>(waste.LocationId)).First();
             var menu = (await connection.QueryAsync<Menu>(d =>
                 d.DateId == waste.DateId && d.LocationId == waste.LocationId)).FirstOrDefault();
 
-            var wasteDto = new WasteDto(location.Name, location.City, menu, waste);
+            var wasteDto = new WasteDto(location.Name, location.City, menu, waste, limit);
 
             return wasteDto;
         }
