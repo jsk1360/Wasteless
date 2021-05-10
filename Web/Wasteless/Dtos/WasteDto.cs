@@ -17,8 +17,8 @@ namespace Wasteless.Dtos
             ForecastLineWasteKg = waste.ForecastLineWasteKg.HasValue
                 ? Math.Round(waste.ForecastLineWasteKg.Value, 2)
                 : null;
-            ForecastProductionWasteKg = waste.ForecastWasteTotalKg.HasValue
-                ? Math.Round(waste.ForecastWasteTotalKg.Value, 2)
+            ForecastProductionWasteKg = waste.ForecastProductionWasteKg.HasValue
+                ? Math.Round(waste.ForecastProductionWasteKg.Value, 2)
                 : null;
             ForecastPlateWasteKg = waste.ForecastPlateWasteKg.HasValue
                 ? Math.Round(waste.ForecastPlateWasteKg.Value, 2)

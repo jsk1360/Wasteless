@@ -53,6 +53,13 @@ export const DayCard = (props) => {
                     </h6>
                     <span style={{height: '1.5rem'}}>{waste.forecastPlateWasteKg}</span>
                 </div>
+
+                <div className="d-flex flex-column mt-2">
+                    <h6 className="card-body-label">
+                        Valmistushävikkimäärä (kg)
+                    </h6>
+                    <span style={{height: '1.5rem'}}>{waste.forecastProductionWasteKg ? waste.forecastProductionWasteKg : "-"}</span>
+                </div>
             </div>
             {/*<div className="border-bottom px-3"> </div>*/}
             <hr className="m-0"/>
