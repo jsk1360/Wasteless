@@ -182,7 +182,7 @@ export const WasteForm = (props) => {
                     value={formState["productionWasteKg"]}
                     id={"productionWasteKg" + formState.date}
                     name="productionWasteKg"
-                    label="Tuotanto"
+                    label="Valmistus"
                     className="form-control form-control-sm"
                     type="number"
                 />
