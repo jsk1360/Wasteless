@@ -124,7 +124,7 @@ export const WasteForm = (props) => {
     }
     
     function getCommentLabel(overLimit) {
-        return overLimit ? "Kommentoi rajan ylittävää hävikkiä" : "Vapaahetoinen kommentti"
+        return overLimit ? "Kommentoi rajan ylittävää hävikkiä" : "Vapaaehtoinen kommentti"
     }
 
     return (
