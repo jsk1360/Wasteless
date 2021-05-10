@@ -25,6 +25,8 @@ namespace WastelessFunction.Data
         [JsonPropertyName("PredictedPlateWasteKg")]
         public double PredictedPlateWasteKg { get; set; }
 
+        [JsonPropertyName("PredictedProductionWasteKg")]
+        public double PredictedProductionWasteKg { get; set; }
        
     }
     public class Prediction
@@ -70,6 +72,7 @@ namespace WastelessFunction.Data
                     wasteDto.Forecast_WasteTotalKg = prediction.PredictedWasteTotalKg;
                     wasteDto.Forecast_LineWasteKg = prediction.PredictedLineWasteKg;
                     wasteDto.Forecast_PlateWasteKg = prediction.PredictedPlateWasteKg;
+                    wasteDto.Forecast_ProductionWasteKg = prediction.PredictedProductionWasteKg;
                 }
                 
             }
