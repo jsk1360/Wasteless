@@ -83,7 +83,7 @@ namespace Wasteless.Data
         private static WasteLimit? GetWasteLimit(Menu? menu)
         {
             return menu?.TotalWasteKgAvg != null
-                ? new WasteLimit {Limit = menu.TotalWasteKgAvg.Value * 0.1, LocationId = menu.LocationId}
+                ? new WasteLimit {Limit = menu.TotalWasteKgAvg.Value * 0.15, LocationId = menu.LocationId}
                 : null;
         }
 
