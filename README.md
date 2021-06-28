@@ -94,6 +94,10 @@ WeatherInfoUpdate updates weather which is used by the PredictionsApi.
 This is the Web-project used to display predictions and to feed new waste amounts for the predictions. It's a .NET 5.0
 C# backend with a React frontend.
 
+#### How to use
+
+Documentation on how to use the application can be found [here](./Web/README.md)
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details
