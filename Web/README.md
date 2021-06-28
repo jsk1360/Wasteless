@@ -32,7 +32,7 @@ The predictions contains the following attributes:
       - Production waste in kg
       - Optional comment (this is required if the waste is greater than the configured maximum)
 
-After modifying any of the fields the user can save the form. Saved fields are used to calculate predictions.
+After modifying any of the fields the user can save the form. Saved fields are used to calculate new predictions.
 
 ### Selecting week and location
 
