@@ -30,7 +30,6 @@ The predictions contains the following attributes:
   - Actual input fields
       - Number of all diners
       - Number of diners with special diet
-      - Total waste in kg
       - Line waste in kg
       - Plate waste in kg
       - Production waste in kg
