@@ -7,6 +7,7 @@ namespace Wasteless.Models
     {
         public int WasteSID { get; set; }
         public int DateId { get; set; }
+        public int MenuItemId { get; set; }
 
         public DateTime Date => GetDate();
 
@@ -28,6 +29,7 @@ namespace Wasteless.Models
         public DateTime ModifiedTime { get; set; }
         public string WeatherInfo { get; set; } = string.Empty;
         public int? MealCountReserved { get; set; }
+        public double? ProducedKg { get; set; }
         
         public string? Comment { get; set; }
 

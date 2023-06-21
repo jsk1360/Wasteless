@@ -1,25 +1,27 @@
 import React, {useEffect, useState} from "react";
-import authService from "./api-authorization/AuthorizeService";
+
+import {callApiWithToken} from "../fetch";
+import {useAccessToken} from "../accessTokenContext";
 
 export const LocationPicker = (props) => {
     const [locations, setLocations] = useState([]);
+    const [accessToken] = useAccessToken()
     const [selectedLocation, setSelectedLocation] = useState(undefined);
 
     useEffect(() => {
-        PopulateLocations();
-    }, [])
+        if (accessToken)
+            PopulateLocations(accessToken);
 
-    async function PopulateLocations() {
-        var token = await authService.getAccessToken();
-        const response = await fetch('waste/locations', {
-            headers: !token ? {} : {'Authorization': `Bearer ${token}`}
-        });
-        const data = await response.json();
+        async function PopulateLocations(accessToken) {
+            const data = await callApiWithToken(accessToken, "waste/Locations");
 
-        setLocations(data);
-        setSelectedLocation(data[0].id);
-        props.onChange(data[0].id);
-    }
+            if (!data) return;
+            setLocations(data);
+            setSelectedLocation(data[0].id);
+            props.onChange(data[0].id);
+        }
+
+    }, [accessToken, props])
 
     function handleChange(event) {
         setSelectedLocation(event.target.value);

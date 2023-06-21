@@ -1,18 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import App from './App';
+import {PublicClientApplication} from "@azure/msal-browser";
+import {msalConfig} from "./authConfig";
+import {AccessTokenProvider} from "./accessTokenContext";
 //import registerServiceWorker from './registerServiceWorker';
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
+const msalInstance = new PublicClientApplication(msalConfig);
+
 const render = Component => {
     return ReactDOM.render(
-        <BrowserRouter basename={baseUrl}>
-            <Component />
-        </BrowserRouter>,
+        <AccessTokenProvider>
+            <BrowserRouter basename={baseUrl}>
+                <Component instance={msalInstance}/>
+            </BrowserRouter>
+        </AccessTokenProvider>,
+
         rootElement);
 }
 
