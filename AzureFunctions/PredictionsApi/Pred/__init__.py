@@ -89,45 +89,52 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     modelMeal.fit(X,y)
     dftrain['PredictedMealTotal'] = modelMeal.predict(X)
 
-    #Filter missing values from train data for WasteTotalKg
-    dftrainwaste = df.dropna(subset=['WasteTotalKg'])
-    Xmenu = dftrainwaste[menucols].values
-    Xother = dftrainwaste[othercols].values
+    #Create models for waste predictions
+    dftrainproductionwaste = df.dropna(subset=['ProductionWasteKg'])
+    Xmenu = dftrainproductionwaste[menucols].values
+    Xother = dftrainproductionwaste[othercols].values
     X = np.concatenate((Xmenu, Xother), axis=1)
-    y = np.array(dftrainwaste['WasteTotalKg'])
+    y = np.array(dftrainproductionwaste['ProductionWasteKg'])
+    modelProductionWaste = linear_model.Ridge()
+    modelProductionWaste.fit(X,y)
+    dftrainproductionwaste['PredictedProductionWasteKg'] = modelProductionWaste.predict(X)
 
-    #Create linear regression model for WasteTotalKg
-    modelWaste = linear_model.LinearRegression()
-    modelWaste.fit(X,y)
-    dftrainwaste['PredictedWasteTotalKg'] = modelWaste.predict(X)
-
-    #Create linear regression model for the ratio between line waste and total waste
-    dftrainwaste['LineWasteKg'] = dftrainwaste['LineWasteKg'].fillna(0)
-    dftrainwaste['LineTotalRatio'] = dftrainwaste.apply(lambda row: 0 if row['WasteTotalKg']==0 else row['LineWasteKg']/row['WasteTotalKg'], axis=1)
-    Xmenu = dftrainwaste[menucols].values
-    Xother = dftrainwaste[othercols].values
+    dftrainlinewaste = df.dropna(subset=['LineWasteKg'])
+    Xmenu = dftrainlinewaste[menucols].values
+    Xother = dftrainlinewaste[othercols].values
     X = np.concatenate((Xmenu, Xother), axis=1)
-    y = np.array(dftrainwaste['LineTotalRatio'])
-    modelRatio = linear_model.LinearRegression()
-    modelRatio.fit(X,y)
-    dftrainwaste['PredictedLineTotalRatio'] = modelRatio.predict(X)
-    dftrainwaste['PredictedLineWasteKg'] = dftrainwaste.apply(lambda row: row['PredictedWasteTotalKg']*min(row['PredictedLineTotalRatio'],1), axis=1)
-    dftrainwaste['PredictedPlateWasteKg'] = dftrainwaste.apply(lambda row: row['PredictedWasteTotalKg']-row['PredictedLineWasteKg'], axis=1)
+    y = np.array(dftrainlinewaste['LineWasteKg'])
+    modelLineWaste = linear_model.Ridge()
+    modelLineWaste.fit(X,y)
+    dftrainlinewaste['PredictedLineWasteKg'] = modelLineWaste.predict(X)
+
+    dftrainplatewaste = df.dropna(subset=['PlateWasteKg'])
+    Xmenu = dftrainplatewaste[menucols].values
+    Xother = dftrainplatewaste[othercols].values
+    X = np.concatenate((Xmenu, Xother), axis=1)
+    y = np.array(dftrainplatewaste['PlateWasteKg'])
+    modelPlateWaste = linear_model.Ridge()
+    modelPlateWaste.fit(X,y)
+    dftrainplatewaste['PredictedPlateWasteKg'] = modelPlateWaste.predict(X)
 
     #Create test dataframe (8 days to future) and write the predictions
-    dftest = df.loc[(df['Date'] >= today) & (df['Date'] < today + pd.DateOffset(days=8))]
+    dftest = df.loc[(df['Date'] >= today) & (df['Date'] < today + pd.DateOffset(days=15))]
     dftest['MealTotalMA'].fillna(method='ffill', inplace=True)
     Xtestmenu = dftest[menucols].values
     Xtestother = dftest[othercols].values
     Xtest = np.concatenate((Xtestmenu, Xtestother), axis=1)
     dftest['PredictedMealTotal'] = modelMeal.predict(Xtest)
-    dftest['PredictedWasteTotalKg'] = modelWaste.predict(Xtest)
-    dftest['PredictedLineTotalRatio'] = modelRatio.predict(Xtest)
-    dftest['PredictedLineWasteKg'] = dftest.apply(lambda row: row['PredictedWasteTotalKg']*min(row['PredictedLineTotalRatio'],1), axis=1)
-    dftest['PredictedPlateWasteKg'] = dftest.apply(lambda row: row['PredictedWasteTotalKg']-row['PredictedLineWasteKg'], axis=1)
+    dftest['PredictedProductionWasteKg'] = modelProductionWaste.predict(Xtest)
+    #dftest['PredictedLineTotalRatio'] = modelRatio.predict(Xtest)
+    #dftest['PredictedLineWasteKg'] = dftest.apply(lambda row: row['PredictedWasteTotalKg']*min(row['PredictedLineTotalRatio'],1), axis=1)
+    #dftest['PredictedPlateWasteKg'] = dftest.apply(lambda row: row['PredictedWasteTotalKg']-row['PredictedLineWasteKg'], axis=1)
+    dftest['PredictedLineWasteKg'] = modelLineWaste.predict(Xtest)
+    dftest['PredictedPlateWasteKg'] = modelPlateWaste.predict(Xtest)
+    dftest['PredictedWasteTotalKg'] = dftest.apply(lambda row: row['PredictedProductionWasteKg']+row['PredictedLineWasteKg']+row['PredictedPlateWasteKg'], axis=1)
 
     #Filter the test dataframe and return the results as json-file
-    dftest = dftest[['LocationSID', 'DateSID', 'PredictedMealTotal', 'PredictedWasteTotalKg', 'PredictedLineWasteKg', 'PredictedPlateWasteKg']]
+    dftest = dftest[['LocationSID', 'DateSID', 'PredictedMealTotal', 'PredictedWasteTotalKg', 'PredictedProductionWasteKg', 'PredictedLineWasteKg', 'PredictedPlateWasteKg']]
+    dftest['PredictedProductionWasteKg'][dftest['PredictedProductionWasteKg']<0] = 0
     dftestjs = dftest.to_json(orient='table', index=False)
 
     return func.HttpResponse(
