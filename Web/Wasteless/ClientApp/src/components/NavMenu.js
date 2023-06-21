@@ -1,8 +1,21 @@
 import React, {Component} from 'react';
-import {Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap';
+import {Collapse, Container, Navbar, NavbarBrand, NavbarToggler} from 'reactstrap';
 import {Link} from 'react-router-dom';
-import {LoginMenu} from './api-authorization/LoginMenu';
 import './NavMenu.css';
+import {useMsal} from "@azure/msal-react";
+
+
+const LoginMenu = () => {
+    const {accounts, instance} = useMsal();
+    return <>
+        {accounts.length > 0 &&
+            <>
+                <button className="btn btn-primary ms-4" onClick={() => instance.logout()}>Kirjaudu ulos</button>
+                <p className="m-0" key ={accounts[0].homeAccountId}>{accounts[0].name}</p>
+            </>
+        }
+    </>
+}
 
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
@@ -32,10 +45,7 @@ export class NavMenu extends Component {
                         <NavbarToggler onClick={this.toggleNavbar} className="mr-2"/>
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed}
                                   navbar>
-                            <ul className="navbar-nav flex-grow">
-                                <LoginMenu>
-                                </LoginMenu>
-                            </ul>
+                            <LoginMenu/>
                         </Collapse>
                     </Container>
                 </Navbar>

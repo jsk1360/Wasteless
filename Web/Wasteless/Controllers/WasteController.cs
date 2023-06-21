@@ -57,15 +57,12 @@ namespace Wasteless.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<WasteDto>> GetWasteItem(int id)
         {
-            var user = await _userService.GetUser();
-
+            var user = _userService.GetUser();
             if (user == null) return Forbid();
 
             var waste = await _wasteService.GetWaste(id);
             if (waste == null) return NotFound();
-
             if (_userService.IsAdmin || waste.LocationId == _userService.LocationId) return waste;
-
             return Forbid();
         }
 

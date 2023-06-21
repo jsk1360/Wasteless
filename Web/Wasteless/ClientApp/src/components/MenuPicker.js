@@ -47,7 +47,7 @@ export const MenuPicker = (props) => {
     }
 
     return (
-        <Select isSearchable value={selectedValue} options={options} filterOption={filterOptions}
+        <Select isDisabled={true} isSearchable={false} value={selectedValue} options={options} filterOption={filterOptions}
                 getOptionLabel={x => x.name} getOptionValue={x => x.name} onChange={handleSelect}/>
     )
 }

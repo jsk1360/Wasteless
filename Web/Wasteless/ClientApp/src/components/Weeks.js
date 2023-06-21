@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
 import moment from "moment";
-import authService from "./api-authorization/AuthorizeService";
 import {DayCard} from "./DayCard";
+import {useAccessToken} from "../accessTokenContext";
 
 export const Weeks = (props) => {
     const [wastes, setWaste] = useState([]);
-    const [menus, setMenus] = useState([]);
+    const [menus] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [accessToken] = useAccessToken()
+    
     const [parameters, setParameters] = useState({
         dates: [],
         location: undefined
@@ -28,39 +30,35 @@ export const Weeks = (props) => {
 
         populateWasteData(momentDays[0], props.location);
         console.log("populate data");
-    }, [props.dates, props.location, parameters.dates, parameters.location])
 
-    useEffect(() => {
-        async function populateMenus(location) {
+        async function populateWasteData(date, location) {
+            if (date === undefined) return;
             setLoading(true);
-            const token = await authService.getAccessToken();
-            const response = await fetch(`menu?location=${location}`, {
-                headers: !token ? {} : {'Authorization': `Bearer ${token}`}
+            const response = await fetch(`waste?date=${date.format("yyyy-MM-DD")}&location=${location}`, {
+                headers: !accessToken ? {} : {'Authorization': `Bearer ${accessToken}`}
             });
             const data = await response.json();
-            setMenus(data);
+            setWaste(data);
             setLoading(false);
         }
+    }, [props.dates, props.location, parameters.dates, parameters.location, accessToken])
 
-        populateMenus(props.location);
-    }, [props.location]);
+    // useEffect(() => {
+    //     async function populateMenus(location) {
+    //         setLoading(true);
+    //         const response = await fetch(`menu?location=${location}`, {
+    //             headers: !accessToken ? {} : {'Authorization': `Bearer ${accessToken}`}
+    //         });
+    //         const data = await response.json();
+    //         setMenus(data);
+    //         setLoading(false);
+    //     }
+    //
+    //     populateMenus(props.location);
+    // }, [props.location]);
 
-
-    async function populateWasteData(date, location) {
-        if (date === undefined) return;
-        setLoading(true);
-        const token = await authService.getAccessToken();
-        const response = await fetch(`waste?date=${date.format("yyyy-MM-DD")}&location=${location}`, {
-            headers: !token ? {} : {'Authorization': `Bearer ${token}`}
-        });
-        const data = await response.json();
-        setWaste(data);
-        setLoading(false);
-    }
 
     return (isLoading ? <p>Ladataan...</p> :
-            wastes.map(w =>
-                <DayCard key={w.date} waste={w} menus={menus}/>
-            )
-    );
+            wastes.length > 0 ? wastes.map(w =>
+                <DayCard key={w.date} waste={w} menus={menus}/>) : <p>Sijainnille ja valitulle ajalle ei löytynyt hävikki tietoja</p>);
 }
