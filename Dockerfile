@@ -19,11 +19,8 @@ RUN npm run build
 # Install 'serve' to serve the built application
 RUN npm install -g serve
 
-# Set environment variables if needed
-ENV PORT 3000
+# Expose the port defined by the environment variable
+EXPOSE $PORT
 
-# Expose the port on which the app will run
-EXPOSE 3000
-
-# Command to start the app
-CMD ["serve", "-s", "build"]
+# Command to start the app, ensuring it uses the correct port
+CMD ["serve", "-s", "build", "-l", "tcp://0.0.0.0:$PORT"]
